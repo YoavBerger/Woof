@@ -1,0 +1,9 @@
+{
+   "client_port":80,
+   "server_ip":"127.0.0.1",
+   "server_port":3000,
+   "request_limit": 20,
+   "seconds_per_limit": 60,
+   "block_time": 3600,
+   "max_active_connections_per_ip": 20
+}
