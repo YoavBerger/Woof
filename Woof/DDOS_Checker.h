@@ -17,17 +17,6 @@ public:
 
 	void removeExpiredConnection(const boost::asio::ip::address& clientAddress);
 
-	//DDOS_Checker(const DDOS_Checker&) = delete;
-	//DDOS_Checker& operator=(const DDOS_Checker&) = delete;
-
-	//static std::shared_ptr<DDOS_Checker> getInstance(unsigned int activeConnectionsPerIP, unsigned int requestLimiter, const std::time_t ipBlockTime, boost::asio::io_context& io, const std::time_t timer_interval)
-	//{
-	//	static std::shared_ptr<DDOS_Checker> instance = 
-	//		std::make_shared<DDOS_Checker>(activeConnectionsPerIP, requestLimiter, ipBlockTime, io, timer_interval);
-	//	
-	//	return instance;
-	//}
-
 	DDOS_Checker(const unsigned int activeConnectionsPerIP, const unsigned int requestLimiter, const std::time_t ipBlockTime, boost::asio::io_context& io, const std::time_t timer_interval);
 
 	~DDOS_Checker();

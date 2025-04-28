@@ -1,10 +1,5 @@
 #include "SQL_Injection_Checker.h"
 #include "HandleUrl.h"
-//
-//std::shared_ptr<SQL_Injection_Checker> SQL_Injection_Checker::getInstance() {
-//	static std::shared_ptr<SQL_Injection_Checker> instance = std::make_shared<SQL_Injection_Checker>();
-//	return instance;
-//}
 
 SQL_Injection_Checker::SQL_Injection_Checker()
 	: _blacklist(R"(\b(select|union|insert|delete|update|drop|alter|exec|into|outfile|load_file|information_schema|benchmark)\b|(--|#|/\*|\*/|['"`]))", std::regex_constants::icase) {
