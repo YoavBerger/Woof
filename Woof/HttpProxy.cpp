@@ -169,8 +169,11 @@ void HttpProxy::on_write_to_client(std::shared_ptr<http::response<http::string_b
 
 void HttpProxy::do_close()
 {
-    //can be called with dummy values since it's a static function with a static parameter
-    DDOS_Checker::getInstance(0, 0, 0, _ioc, 0)->removeExpiredConnection(_client_stream.socket().remote_endpoint().address());
+    //getting ddos checker object 
+    //since this is the only time this is done, i decided against changing CheckCaller just so this could potentially look less messy
+    DDOS_Checker* ddosChecker = static_cast<DDOS_Checker*>(CheckCaller::getCheckers(std::vector({ Error::DDOS }), _ioc)[0].get());
+    ddosChecker->removeExpiredConnection(_client_stream.socket().remote_endpoint().address());
+
     beast::error_code ec;
     _client_stream.socket().shutdown(tcp::socket::shutdown_send, ec);
 }

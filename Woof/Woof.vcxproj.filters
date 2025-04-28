@@ -48,9 +48,6 @@
     <ClCompile Include="CSRF_Checker.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
-    <ClCompile Include="HandleUrl.cpp">
-      <Filter>Source Files\Modules</Filter>
-    </ClCompile>
     <ClCompile Include="SQL_Injection_Checker.cpp">
       <Filter>Source Files\Modules</Filter>
     </ClCompile>
@@ -67,6 +64,9 @@
       <Filter>Source Files\Handlers</Filter>
     </ClCompile>
     <ClCompile Include="CheckCaller.cpp">
+      <Filter>Source Files\Handlers</Filter>
+    </ClCompile>
+    <ClCompile Include="HandleUrl.cpp">
       <Filter>Source Files\Handlers</Filter>
     </ClCompile>
   </ItemGroup>

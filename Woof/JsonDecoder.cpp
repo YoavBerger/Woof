@@ -50,14 +50,14 @@ std::unordered_map<std::string, std::vector<std::string>> JsonDecoder::jsonArray
     return result;
 }
 
-std::map<std::string, std::string> JsonDecoder::getSettings()
+std::unordered_map<std::string, std::string> JsonDecoder::getSettings()
 {
     if(settings.empty())
         loadSettings();
     return settings;
 }
 
-std::map<std::string, std::vector<Error>> JsonDecoder::getSubDirectoriesSettings() 
+std::unordered_map<std::string, std::vector<Error>> JsonDecoder::getSubDirectoriesSettings() 
 {
     if(subDirectoriesSettings.empty())
         loadSubDirectoriesSettings();

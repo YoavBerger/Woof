@@ -1,11 +1,11 @@
 #include "XSS_Checker.h"
 #include <regex>
 #include <sstream>
-
-std::shared_ptr<XSS_Checker> XSS_Checker::getInstance() {
-    static std::shared_ptr<XSS_Checker> instance = std::make_shared<XSS_Checker>();
-    return instance;
-}
+//
+//std::shared_ptr<XSS_Checker> XSS_Checker::getInstance() {
+//    static std::shared_ptr<XSS_Checker> instance = std::make_shared<XSS_Checker>();
+//    return instance;
+//}
 
 XSS_Checker::XSS_Checker()
     : _blacklist(R"(<.*?(script|alert|eval|onerror|onload|document\.cookie|window\.location).*?>|javascript:)", std::regex_constants::icase) {

@@ -7,10 +7,10 @@
 class SQL_Injection_Checker : public SecurityChecker
 {
 public:
-	SQL_Injection_Checker(const SQL_Injection_Checker&) = delete;
-	SQL_Injection_Checker& operator=(const SQL_Injection_Checker&) = delete;
-	
-	static std::shared_ptr<SQL_Injection_Checker> getInstance();
+	//SQL_Injection_Checker(const SQL_Injection_Checker&) = delete;
+	//SQL_Injection_Checker& operator=(const SQL_Injection_Checker&) = delete;
+	//
+	//static std::shared_ptr<SQL_Injection_Checker> getInstance();
 
 	virtual SecurityCheckResult check(const boost::beast::http::request<boost::beast::http::string_body>& request,const boost::asio::ip::address& clientAddress) override;
 

@@ -1,12 +1,6 @@
 #include "CSRF_Checker.h"
-#include "SettingsLoadHelper.h"
 #include "HandleUrl.h"
-
-std::shared_ptr<CSRF_Checker> CSRF_Checker::getInstance(const std::unordered_map<std::string, std::vector<std::string>>& whitelist)
-{
-	static std::shared_ptr<CSRF_Checker> singleton = std::make_shared<CSRF_Checker>(whitelist);
-	return singleton;
-}
+#include "CheckCaller.h"
 
 CSRF_Checker::CSRF_Checker(const std::unordered_map<std::string, std::vector<std::string>>& whitelist)
 	: _referer_whitelist(whitelist)
@@ -19,7 +13,7 @@ bool CSRF_Checker::isRefererAllowed(const std::string& host, const std::string& 
 	}
 	
 	std::string baseRef = HandleUrl::getBaseUrl(referer);
-	std::vector<std::string> whitelist = SettingsLoadHelper::getBestMatchUrl<std::vector<std::string>>(baseRef, _referer_whitelist);
+	std::vector<std::string> whitelist = CheckCaller::findBestMatch<std::vector<std::string>>(baseRef, _referer_whitelist);
 	
 	// Check if the referer is in the whitelist
 	for (const auto& allowedReferer : whitelist) {

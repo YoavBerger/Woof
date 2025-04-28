@@ -61,9 +61,6 @@ void initServer(asio::io_context& ioc)
     auto const listen_address = asio::ip::make_address(LISTEN_ADDR);
     auto const server_address = asio::ip::make_address(SERVER_ADDR);
     
-    //need to init DDOS checker for edge cases since it's required when a connection closes
-    CheckCaller::getCheckers(std::vector<Error>({ Error::DDOS }), ioc);
-
     // Create and launch a listening port
     std::shared_ptr<HttpListener> listener = std::make_shared<HttpListener>(ioc, tcp::endpoint{ listen_address, listen_port }, tcp::endpoint{ server_address, server_port });
 

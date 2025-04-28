@@ -9,32 +9,42 @@
 
 std::vector<std::shared_ptr<SecurityChecker>> CheckCaller::getCheckers(const std::vector<Error>& errorTypes, boost::asio::io_context& io) 
 {
-    auto settings = JsonDecoder::getInstance()->getSettings();
+    JsonDecoder decoder;
+    static auto settings = decoder.getSettings();
+
+    static auto ddosChecker = std::make_shared<DDOS_Checker>(std::atoi(settings.at("max_active_connections_per_ip").c_str()), std::atoi(settings.at("request_limit").c_str()), std::atoi(settings.at("block_time").c_str()), io, std::atoi(settings.at("seconds_per_limit").c_str()));
+    static auto csrfChecker = std::make_shared<CSRF_Checker>(CSRF_Checker(JsonDecoder::jsonArraysToMapOfVectors(CSRF_ALLOWED_REFERERS_PATH)));
+    static auto xssChecker = std::make_shared<XSS_Checker>(XSS_Checker());
+    static auto sqliChecker = std::make_shared<SQL_Injection_Checker>(SQL_Injection_Checker());
 
     std::vector<std::shared_ptr<SecurityChecker>> checkers;
     
     for (const auto& errorType : errorTypes) {
         switch (errorType) {
+            case Error::DDOS:
+                checkers.insert(checkers.begin(), ddosChecker);
+                //inserting at the start of the vector since DDOS checking needs to perform first to not overload WAF
+                break;
             case Error::SQLI:
-                checkers.push_back(SQL_Injection_Checker::getInstance());
+                checkers.push_back(sqliChecker);
                 break;
             case Error::XSS:
-                checkers.push_back(XSS_Checker::getInstance());
+                checkers.push_back(xssChecker);
                 break;
             case Error::CSRF:
-                checkers.push_back(CSRF_Checker::getInstance(JsonDecoder::jsonArraysToMapOfVectors(CSRF_ALLOWED_REFERERS_PATH)));
+                checkers.push_back(csrfChecker);
                 break;
-            case Error::DDOS:
-                checkers.push_back(DDOS_Checker::getInstance(std::atoi(settings.at("max_active_connections_per_ip").c_str()), std::atoi(settings.at("request_limit").c_str()), std::atoi(settings.at("block_time").c_str()), io, std::atoi(settings.at("seconds_per_limit").c_str())));
-                break;
-            // Add other checkers as needed
             default:
-                // Skip unknown checker types
                 break;
         }
     }
     
     return checkers;
+}
+
+inline bool CheckCaller::isValidRegex(const std::string& pattern)
+{
+    return std::regex(pattern).mark_count() >= 0;
 }
 
 SecurityCheckResult CheckCaller::runSecurityChecks(

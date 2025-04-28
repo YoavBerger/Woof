@@ -8,9 +8,9 @@
 class XSS_Checker : public SecurityChecker
 {
 public:
-	static std::shared_ptr<XSS_Checker> getInstance();
-	XSS_Checker(const XSS_Checker&) = delete;
-	XSS_Checker& operator=(const XSS_Checker&) = delete;
+	//static std::shared_ptr<XSS_Checker> getInstance();
+	//XSS_Checker(const XSS_Checker&) = delete;
+	//XSS_Checker& operator=(const XSS_Checker&) = delete;
 
 	virtual SecurityCheckResult check(const boost::beast::http::request<boost::beast::http::string_body>& request, const boost::asio::ip::address& clientAddress) override;
 
